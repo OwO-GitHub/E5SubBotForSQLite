@@ -1,7 +1,7 @@
 name: E5SubBotForSQLite镜像构建
 
 on:
-  push:
+  repository_dispatch:
   workflow_dispatch:
     inputs:
       ssh:
@@ -14,10 +14,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
-
-      - name: SSH connection to Actions
-        uses: P3TERX/ssh2actions@v1.0.0
-        if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
         
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -31,6 +27,10 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: SSH connection to Actions
+        uses: P3TERX/ssh2actions@v1.0.0
+        if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
+      
       - name: Dockerhub Push
         uses: docker/build-push-action@v2
         with:
