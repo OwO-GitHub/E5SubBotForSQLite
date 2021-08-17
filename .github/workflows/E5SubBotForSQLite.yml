@@ -3,11 +3,15 @@ name: E5SubBotForSQLite镜像构建
 on:
   push:
   workflow_dispatch:
-    
+  watch:
+    types: started
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
     steps:
+      - name: SSH connection to Actions
+        uses: P3TERX/debugger-action@master
+        
       - name: Checkout
         uses: actions/checkout@master
 
