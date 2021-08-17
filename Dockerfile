@@ -1,11 +1,10 @@
-  
 FROM golang:alpine AS builder
 
 WORKDIR /root
 
-RUN apk update && apk add git gcc g++ \
-    && git clone https://github.com/OwO-GitHub/E5SubBotForSQLite.git \
-    && cd E5SubBotForSQLite && go build
+RUN apk update && apk add git \
+    && git clone https://github.com/iyear/E5SubBot.git \
+    && cd E5SubBot && go build
 
 FROM alpine:latest
 
@@ -16,6 +15,6 @@ RUN apk update && apk add tzdata \
 
 WORKDIR /root
 
-COPY --from=builder /root/E5SubBotForSQLite/E5SubBotForSQLite /root
+COPY --from=builder /root/E5SubBot/main /root
 
-CMD [ "/root/E5SubBotForSQLite" ]
+CMD [ "/root/main" ]
