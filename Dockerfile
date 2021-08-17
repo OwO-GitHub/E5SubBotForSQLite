@@ -3,7 +3,7 @@ FROM golang:alpine AS builder
 
 WORKDIR /root
 
-RUN apk update && apk add git \
+RUN apk update && apk add git gcc g++ \
     && git clone https://github.com/OwO-GitHub/E5SubBotForSQLite.git \
     && cd E5SubBotForSQLite && go build
 
